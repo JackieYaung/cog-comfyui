@@ -39,6 +39,8 @@ class Predictor(BasePredictor):
 
         self.comfyUI = ComfyUI("127.0.0.1:8188")
         self.comfyUI.start_server(OUTPUT_DIR, INPUT_DIR)
+        
+        self.comfyUI.handle_weights(WORKFLOW)
 
     def handle_input_file(self, input_file: Path) -> str:
         """处理输入图片，返回文件名"""
