@@ -122,46 +122,46 @@ class Predictor(BasePredictor):
         ),
         denoise: float = Input(
             description="去噪强度（越高变化越大）",
-            default=0.75,
+            default=0.7,
             ge=0.0,
             le=1.0,
         ),
-        depth_strength: float = Input(
-            description="Depth ControlNet 强度（保持空间结构）",
-            default=0.35,
-            ge=0.0,
-            le=1.0,
-        ),
-        depth_start: float = Input(
-            description="Depth ControlNet 开始比例",
-            default=0.25,
-            ge=0.0,
-            le=1.0,
-        ),
-        depth_end: float = Input(
-            description="Depth ControlNet 结束比例",
-            default=0.8,
-            ge=0.0,
-            le=1.0,
-        ),
-        tile_strength: float = Input(
-            description="Tile ControlNet 强度（保持细节纹理）",
-            default=0.15,
-            ge=0.0,
-            le=1.0,
-        ),
-        tile_start: float = Input(
-            description="Tile ControlNet 开始比例",
-            default=0.6,
-            ge=0.0,
-            le=1.0,
-        ),
-        tile_end: float = Input(
-            description="Tile ControlNet 结束比例",
-            default=1.0,
-            ge=0.0,
-            le=1.0,
-        ),
+        # depth_strength: float = Input(
+        #     description="Depth ControlNet 强度（保持空间结构）",
+        #     default=0.35,
+        #     ge=0.0,
+        #     le=1.0,
+        # ),
+        # depth_start: float = Input(
+        #     description="Depth ControlNet 开始比例",
+        #     default=0.25,
+        #     ge=0.0,
+        #     le=1.0,
+        # ),
+        # depth_end: float = Input(
+        #     description="Depth ControlNet 结束比例",
+        #     default=0.8,
+        #     ge=0.0,
+        #     le=1.0,
+        # ),
+        # tile_strength: float = Input(
+        #     description="Tile ControlNet 强度（保持细节纹理）",
+        #     default=0.15,
+        #     ge=0.0,
+        #     le=1.0,
+        # ),
+        # tile_start: float = Input(
+        #     description="Tile ControlNet 开始比例",
+        #     default=0.6,
+        #     ge=0.0,
+        #     le=1.0,
+        # ),
+        # tile_end: float = Input(
+        #     description="Tile ControlNet 结束比例",
+        #     default=1.0,
+        #     ge=0.0,
+        #     le=1.0,
+        # ),
         seed: int = Input(
             description="随机种子（留空则随机）",
             default=None,
@@ -178,6 +178,14 @@ class Predictor(BasePredictor):
 
         # 复制工作流并更新参数
         wf = copy.deepcopy(WORKFLOW)
+        
+        depth_strength = 0.25
+        depth_start = 0.25
+        depth_end = 0.9
+        tile_strength = 0 # 去掉 tile controlnet
+        tile_start = 0.6
+        tile_end = 1.0
+        
         wf = self.update_workflow(
             wf,
             image_filename,
